@@ -9,7 +9,7 @@ const unsigned leng = 4000u;
 
 int main()
 {
-    // initialize stdlib randon number generator
+    // initialize stdlib random number generator
     srand(time(NULL));
 
     std::cout<<"Die Zahl der Elemente ist: "<<leng<<'\n';
@@ -22,7 +22,7 @@ int main()
     std::generate_n(vec2, leng, &std::rand);
 
     // produce difference vector for comparison of vec1 and vec2
-    int compvec[leng]; std::fill_n(compvec, leng, false);
+    int compvec[leng];
     std::transform(vec1, vec1+leng, vec2, compvec, std::minus<int>());
 
     // count elements that are greater in vec1
