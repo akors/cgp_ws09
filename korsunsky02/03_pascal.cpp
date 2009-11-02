@@ -1,17 +1,4 @@
 #include <iostream>
-#include <cmath>
-
-unsigned factorial(unsigned n)
-{
-    unsigned result = n;
-
-    while(n > 1)
-        result *= --n;
-
-    return result;
-}
-
-void print_pascal(unsigned size, unsigned *pascal[]);
 
 const std::size_t pascal_size = 10;
 
@@ -38,11 +25,6 @@ int main()
         // last value is allways one
         pascal[i][i] = 1;
     }
-
-    std::cout<<"Last row: ";
-    for (i = 0; i < pascal_size; ++i)
-        std::cout<<'|'<<pascal[pascal_size-1][i];
-
 
     std::cout<<"Die ersten zehn Zeilen des Pascalschen Dreiecks sind:\n";
     for (i = 0; i < pascal_size; ++i)
