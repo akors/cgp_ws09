@@ -11,21 +11,34 @@ int main()
     unsigned n;
 
     std::cout<<"Geben sie eine Ganzahl ein dessen Primfaktoren bestimmt werden"
-        " sollen:";
+        " sollen: ";
 
     std::cin>>n;
     if(!std::cin.good())
     {
-        std::cerr<<"Sie muessen eine Ganzzahl eingeben!\n";
+        std::cerr<<"Konnte Wert nicht einlesen. "
+            "Sie muessen eine Ganzzahl eingeben!\n";
         return 1;
     }
 
-    std::valarray<unsigned> primes = produce_primes(n);
+    // we don't like to compute prime factors for zeros, ones and twos
+    if (!(n > 1))
+    {
+        std::cout<<"Primfaktoren von 0, 1 und 2 sind nicht definiert!\n";
+        return 1;
+    }
 
-    std::cout<<"Primfaktoren: ";
-    print_primefactors(primes, n);
-    std::cout<<"\n";
+    try {
+        std::valarray<unsigned> primes = produce_primes(n);
 
+        std::cout<<"Primfaktoren: ";
+        print_primefactors(primes, n);
+        std::cout<<"\n";
+    } catch(const std::bad_alloc&)
+    {
+        std::cerr<<"Entschuldigung, die zu untersuchende Zahl ist leider "
+            "zu gross. Versuchen sie es bitte mit einer kleineren Zahl!\n";
+    }
     return 0;
 }
 
@@ -33,10 +46,21 @@ void print_primefactors(const std::valarray<unsigned>& primes, unsigned n)
 {
     unsigned i = 0;
 
-    while (primes[i] < n/2 && i < primes.size())
+    while (n > 1 && i < primes.size())
     {
+        // if we found a prime factor,
         if ((n % primes[i]) == 0u)
+        {
+            // print out the number,
             std::cout<<primes[i]<<" ";
+
+            // divide the number by the prime,
+            n /= primes[i];
+
+            // and continue to check if the prime number might be contained
+            // several times
+            continue;
+        }
 
         ++i;
     }
