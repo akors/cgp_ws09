@@ -41,10 +41,10 @@ int main()
         }
 
         matrix_t inv = invert2x2(mat);
-        std::cout<<"Invertierte Matrix A^-1 = \n";
+        std::cout<<"Invertierte Matrix A^-1 = \n\n";
         print2x2(inv);
 
-        std::cout<<"Probe: A * A^-1 = \n";
+        std::cout<<"\nProbe: A * A^-1 = \n";
         print2x2(m_multiply2x2(mat, inv));
     } catch(...)
     {
