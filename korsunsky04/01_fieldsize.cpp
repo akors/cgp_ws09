@@ -30,7 +30,7 @@ void show_sizes()
         <<col_diff<<" Speichereinheit(en).\n\n";
 
     std::cout<<"Die Adresse des letzten Elements einer Zeile unterscheidet "
-        "sich von der Adresse des ersten Elements der nächsten Zeile durch "
+        "sich von der Adresse des ersten Elements der naechsten Zeile durch "
         <<row_wrap<<" Speichereinheit(en).\n\n";
     std::cout<<seperator<<std::endl;
 }
@@ -56,18 +56,18 @@ void beobachtungen()
 {
     std::cout<<
     "Beobachtungen: \n"
-    "Für statisch reservierte Arrays gilt folgendes:\n"
+    "Fuer statisch reservierte Arrays gilt folgendes:\n"
     "Die Elemente eines jeden Feldes liegen in konstantem Abstand voneinander.\n"
     "Bei zweidimensionalen Feldern liegen die Elemente einer Zeile nacheinander;"
     "die Zeilen des Feldes leigen ebenfalls nacheinander im Speicher."
     "\n\n"
-    "Der Abstand der Elemente voneinander ist abhängig vom Datentyp der Elemente"
-    ".\nFür bool ist dieser "<<sizeof(bool)<<" == sizeof(bool),\n"
-    "Für int ist dieser "<<sizeof(int)<<" == sizeof(int),\n"
-    "Für double ist dieser "<<sizeof(double)<<" == sizeof(double).\n"
+    "Der Abstand der Elemente voneinander ist abhaengig vom Datentyp der Elemente"
+    ".\nFuer bool ist dieser "<<sizeof(bool)<<" == sizeof(bool),\n"
+    "Fuer int ist dieser "<<sizeof(int)<<" == sizeof(int),\n"
+    "Fuer double ist dieser "<<sizeof(double)<<" == sizeof(double).\n"
         <<
     "Interpretation:\n"
-    "Für statische Arrays und Felder optimiert der verwendete Compiler den "
+    "Fuer statische Arrays und Felder optimiert der verwendete Compiler den "
     "Zugriff auf die Elemente der Felder durch anordnung in reihe.\n";
 
 }
