@@ -3,18 +3,43 @@
 #include <cassert>
 
 std::valarray<unsigned> produce_primes(unsigned highest);
+void print_primefactors(const std::valarray<unsigned>& primes, unsigned n);
 
 
 int main()
 {
-    std::valarray<unsigned> primes = produce_primes(10000000);
+    unsigned n;
 
-    std::cout<<"Primes up to "<<primes.size()<<":\n";
-    for (unsigned i = 0; i < primes.size(); ++i)
-        std::cout<<primes[i]<<" ";
-    std::cout<<'\n';
+    std::cout<<"Geben sie eine Ganzahl ein dessen Primfaktoren bestimmt werden"
+        " sollen:";
+
+    std::cin>>n;
+    if(!std::cin.good())
+    {
+        std::cerr<<"Sie muessen eine Ganzzahl eingeben!\n";
+        return 1;
+    }
+
+    std::valarray<unsigned> primes = produce_primes(n);
+
+    std::cout<<"Primfaktoren: ";
+    print_primefactors(primes, n);
+    std::cout<<"\n";
 
     return 0;
+}
+
+void print_primefactors(const std::valarray<unsigned>& primes, unsigned n)
+{
+    unsigned i = 0;
+
+    while (primes[i] < n/2 && i < primes.size())
+    {
+        if ((n % primes[i]) == 0u)
+            std::cout<<primes[i]<<" ";
+
+        ++i;
+    }
 }
 
 // Produce primes with the Sieve of Eratosthenes
