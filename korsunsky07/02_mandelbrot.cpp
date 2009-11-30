@@ -1,17 +1,20 @@
 #include "xwindows.h"
 
 double x_start = -2., y_start = -1.25;
+double radius = 2.5;
+
+
 const int nx = 800;
 
 const unsigned iter_max = 500;
-const double radius = 2.0;
+const double flight_radius = 2.0;
 
 unsigned niter(double x, double y);
 
 int main()
 {
     double x = x_start, y = y_start;
-    double Dx = 2.5 / static_cast<float>(nx);
+    double Dx = radius / static_cast<float>(nx);
 
     std::cout<<"Dx = "<<Dx<<'\n';
 
@@ -48,7 +51,7 @@ unsigned niter(double x, double y)
 
     // calculate absolute value of the complex number and compare to be smaller
     // than the radius (spare the additional sqrt() call)
-    while(w_r*w_r + w_i*w_i < radius*radius && nn < iter_max)
+    while(w_r*w_r + w_i*w_i < flight_radius*flight_radius && nn < iter_max)
     {
         // calculate the sqare of the complex number, add the current point
 
