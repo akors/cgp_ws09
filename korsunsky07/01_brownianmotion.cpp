@@ -19,22 +19,28 @@ int main ()
     // allocate variables for particle position
     int p_x = nx/2, p_y = ny/2;
 
+    // number of position changes per frame
+    const int iters = 5;
+
+    std::cout<<"Rendern...\n";
     while (!main_window.KeyIsPressed())
     {
-        int rr = rand() % 4;
-        switch (rr)
+        for (int i = 0; i < iters; ++i)
         {
-            case 0: ++p_x; break; case 1: --p_x; break;
-            case 2: ++p_y; break; case 3: --p_y;  default:;
-        }
+            int rr = rand() % 4;
+            switch (rr)
+            {
+                case 0: ++p_x; break; case 1: --p_x; break;
+                case 2: ++p_y; break; case 3: --p_y;  default:;
+            }
 
-        main_window.DrawPoint(p_x,p_y);
+            main_window.DrawPoint(p_x,p_y);
+        }
 
         useconds_t sleep_us = ((1/fps) * 1e+6);
         usleep(sleep_us); // sleep certain time to maintain framerate
     }
 
-    std::cout << std::endl << "OK" << std::endl;
-
+    std::cout<<"Bye!\n";
     return 0;
  }
