@@ -20,10 +20,13 @@ bool writePlotData(
 
     // iterate x values
     for (Type1 x = x_lims.first; x < x_lims.second; x += resolution.first)
+    {
         for (Type2 y = y_lims.first; y < y_lims.second; y += resolution.second)
         {
-            outfile<<x<<' '<<y<<' '<<f(x,y)<<'\n';
+            outfile<<x<<' '<<y<<' '<<f(x,y)<<std::endl;
         }
+    }
+
 
     outfile.close();
     return true;
@@ -31,7 +34,7 @@ bool writePlotData(
 
 struct Func {
     double operator() (double x, double y)
-    { return (x*x + 2.4*y*y - y) * std::exp(1 - (x*x + y*y)); }
+    { return (x*x + 2.5*y*y - y) * std::exp(1 - (x*x + y*y)); }
 };
 
 int main(int argc, char** argv)
@@ -48,7 +51,7 @@ int main(int argc, char** argv)
         func,
         make_pair(-2.5,2.5),
         make_pair(-2.5,2.5),
-        make_pair(0.3,0.3),
+        make_pair(0.1,0.1),
         argv[1]
     );
 

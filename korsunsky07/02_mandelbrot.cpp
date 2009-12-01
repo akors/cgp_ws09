@@ -1,7 +1,7 @@
 #include "xwindows.h"
 
 double x_start = -2., y_start = -1.25;
-double radius = 2.5;
+double radius = 2.0;
 
 
 const int nx = 800;
