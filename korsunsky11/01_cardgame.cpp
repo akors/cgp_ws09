@@ -12,20 +12,18 @@ int main()
     // Ininitalize stdlib randon number generator
     srand(time(NULL));
 
-    // create list of cards
-    std::list<Card> cards;
 
-    for (unsigned i = 0; i < 6; ++i )
-        cards.push_back(Card());
+    Talon spiel(6);
 
-    // print out the list
-    std::copy(
-        cards.begin(),
-        cards.end(),
-        std::ostream_iterator<Card>(std::cout, ", ")
-    );
+    std::cout<<"\nvorher: \n";
+    spiel.showCards();
 
-    std::cout<<std::endl;
+    spiel.removePair(5);
+    spiel.removePair(2);
+    std::cout<<'\n';
+
+    std::cout<<"\nnachher: \n";
+    spiel.showCards();
 
     return 0;
 }

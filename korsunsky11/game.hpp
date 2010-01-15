@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <list>
+#include <functional>
+#include <iterator>
+#include <algorithm>
 
 #include <cstdlib>
 #include <cassert>
@@ -33,27 +36,14 @@ struct Card
     { return _card_id; }
 
     bool operator == (const Card& other) const
-    { return other._card_id == _card_id; }
+    { return _card_id == other._card_id; }
 
     bool operator < (const Card& other) const
-    { return other._card_id < _card_id; }
+    { return  _card_id < other._card_id; }
 
 private:
-#ifdef USE_SUGGESTED_RANDCODE
-    static int nrand(int n)
-    {
-        const int bucket_size = RAND_MAX / n;
-        int r;
-        do r = rand() / bucket_size;
-        while (r >= n);
-        return r;
-    }
-#else // ifdef USE_SUGGESTED_RANDCODE
     static card_id_t nrand(card_id_t n)
-    {
-        return rand() % n;
-    }
-#endif // ifdef USE_SUGGESTED_RANDCODE
+    { return rand() % n; }
 
     card_id_t _card_id;
 
@@ -64,5 +54,28 @@ private:
 inline std::ostream& operator << (std::ostream& os, const Card& card)
 { return os<<card.cardname(); }
 
+class Talon
+{
+    typedef std::list<Card> cardlist_t;
+    std::size_t _max_cards;
+    cardlist_t _cardlist;
+
+
+public:
+    // construct Talon game with N cards
+    Talon(std::size_t max_cards)
+        : _max_cards(max_cards)
+    {
+        // (ab)using local copy of max_cards variable as counter
+        for (max_cards = 0; max_cards < _max_cards; ++max_cards)
+            _cardlist.push_back(Card());
+    }
+
+   // remove pair from cardlist. if the pair existed, return true
+   // otherwise false.
+    bool removePair(Card::card_id_t card);
+
+    void showCards();
+};
 
 #endif // ifndef GAME_HPP_
