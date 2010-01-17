@@ -3,11 +3,14 @@
 # compile everything with maximum warning level and debugging symbols
 CXXFLAGS += -Wall -g -pedantic
 
-ALL_TARGETS := 01_cardgame
+ALL_TARGETS := 01_cardgame menutest
 
-all: $(ALL_TARGETS)
+all: 01_cardgame
 
-01_cardgame: 01_cardgame.cpp game.cpp
+01_cardgame: 01_cardgame.cpp game.cpp menu.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+menutest: menutest.cpp menu.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 clean:
