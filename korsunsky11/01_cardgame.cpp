@@ -15,15 +15,7 @@ int main()
 
     Talon spiel(6);
 
-    std::cout<<"\nvorher: \n";
-    spiel.showCards();
-
-    spiel.removePair(5);
-    spiel.removePair(2);
-    std::cout<<'\n';
-
-    std::cout<<"\nnachher: \n";
-    spiel.showCards();
+    spiel.play();
 
     return 0;
 }

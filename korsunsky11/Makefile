@@ -7,12 +7,12 @@ ALL_TARGETS := 01_cardgame menutest
 
 all: 01_cardgame
 
-01_cardgame: 01_cardgame.cpp game.cpp menu.cpp
+01_cardgame: 01_cardgame.o game.o menu.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-menutest: menutest.cpp menu.cpp
+menutest: menutest.o menu.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 clean:
-	rm -f $(ALL_TARGETS)
+	rm -f $(ALL_TARGETS) *.o
 

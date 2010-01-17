@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <cassert>
 
+#include "menu.hpp"
+
 struct Card
 {
     typedef unsigned card_id_t;
@@ -41,41 +43,61 @@ struct Card
     bool operator < (const Card& other) const
     { return  _card_id < other._card_id; }
 
+
+    static const std::size_t _num_cards = 13;
 private:
     static card_id_t nrand(card_id_t n)
     { return rand() % n; }
 
     card_id_t _card_id;
 
-    static const std::size_t _num_cards = 13;
     static const char *_cardnames[];
 };
 
 inline std::ostream& operator << (std::ostream& os, const Card& card)
 { return os<<card.cardname(); }
 
+
 class Talon
 {
     typedef std::list<Card> cardlist_t;
-    std::size_t _max_cards;
+    std::size_t _start_cards;
     cardlist_t _cardlist;
 
-
-public:
-    // construct Talon game with N cards
-    Talon(std::size_t max_cards)
-        : _max_cards(max_cards)
-    {
-        // (ab)using local copy of max_cards variable as counter
-        for (max_cards = 0; max_cards < _max_cards; ++max_cards)
-            _cardlist.push_back(Card());
-    }
+    AskingMenu _game_menu;
+    static const AskingMenu::MenuItem _menu_items[];
 
    // remove pair from cardlist. if the pair existed, return true
    // otherwise false.
     bool removePair(Card::card_id_t card);
 
     void showCards();
+
+    enum {
+        MENU_DRAW = 0
+        ,MENU_DISCARD
+        ,MENU_QUIT
+
+
+        ,MENU_NUM_ITEMS
+    };
+public:
+    // construct Talon game with N cards
+    Talon(std::size_t start_cards)
+        : _start_cards(start_cards)
+    {
+        // (ab)using local copy of max_cards variable as counter
+        for (start_cards = 0; start_cards < _start_cards; ++start_cards)
+            _cardlist.push_back(Card());
+
+        // initialize game menu
+        _game_menu = AskingMenu(
+            "Heben sie eine Karte ab oder legen sie ein Paar ab!",
+            _menu_items, MENU_NUM_ITEMS
+        );
+    }
+
+    void play();
 };
 
 #endif // ifndef GAME_HPP_

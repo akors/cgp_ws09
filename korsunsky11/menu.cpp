@@ -16,8 +16,6 @@ AskingMenu::MenuItem::item_id_t AskingMenu::ask()
         return -1;
     }
 
-    std::cout<<std::endl;
-
     // getChoice() returns a menu item starting with one
     return _menu_items[choice-1].item_id;
 }
@@ -36,9 +34,9 @@ void AskingMenu::printMenu() const
     std::cout<<std::flush;
 }
 
-unsigned AskingMenu::getChoice() const
+unsigned AskingMenu::getChoice()
 {
-    MenuItem::item_id_t choice;
+    MenuItem::item_id_t choice = -1;
     std::cin>>choice;
 
     // if there was an error, return -1

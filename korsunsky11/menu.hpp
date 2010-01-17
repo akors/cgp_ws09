@@ -22,10 +22,13 @@ struct AskingMenu
         { return priority < other.priority; }
     };
 
+    // default constructor, do nothing
+    AskingMenu() {}
+
     // constructor, initialize with an array of menu items
     AskingMenu(
         const std::string& asking_text,
-        MenuItem items[], std::size_t num_items)
+        const MenuItem items[], std::size_t num_items)
         : _asking_text(asking_text)
     {
         for (unsigned i = 0; i < num_items; ++i)
@@ -36,14 +39,13 @@ struct AskingMenu
 
     MenuItem::item_id_t ask();
 
+    static unsigned getChoice();
 private:
     typedef std::vector<MenuItem> items_list_t;
     items_list_t _menu_items;
     std::string _asking_text;
 
     void printMenu() const;
-
-    unsigned getChoice() const;
 };
 
 #endif // ifndef MENU_HPP_
