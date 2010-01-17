@@ -120,5 +120,7 @@ void Talon::play()
         }
 
         std::cout<<std::endl;
-    } while(menu_choice != MENU_QUIT);
+        if (_cardlist.empty())
+            std::cout<<"Sie haben gewonnen! Gratulation!\n";
+    } while(!_cardlist.empty());
 }
