@@ -1,12 +1,7 @@
 #include "game.hpp"
 
 const char *Card::_cardnames[] = {
-    "Zwei"
-    ,"Drei"
-    ,"Vier"
-    ,"Fünf"
-    ,"Sechs"
-    ,"Sieben"
+    "Sieben"
     ,"Acht"
     ,"Neun"
     ,"Zehn"

@@ -44,7 +44,7 @@ struct Card
     { return  _card_id < other._card_id; }
 
 
-    static const std::size_t _num_cards = 13;
+    static const std::size_t _num_cards = 8;
 private:
     static card_id_t nrand(card_id_t n)
     { return rand() % n; }
