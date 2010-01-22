@@ -1,10 +1,18 @@
 #include <iostream>
+#include <sstream>
 #include <complex>
+#include <limits>
 #include <fstream>
 
 #include <cstdlib>
 
-const unsigned default_num_iterations = 150;
+const unsigned default_num_iterations = 30;
+
+inline bool is_finite(const std::complex<double>& c)
+{
+    return (fabs(c.real()) != std::numeric_limits<double>::infinity() &&
+        fabs(c.imag()) != std::numeric_limits<double>::infinity());
+}
 
 inline std::complex<double> next_elem(std::complex<double> prev)
 {
@@ -30,7 +38,15 @@ int main(int argc, char* argv[])
         std::cin>>outfilename;
     }
 
-    //
+    std::cout<<"Bitte geben sie Anzahl der Iterationen an: ";
+    std::cin>>num_iterations;
+
+    if (!std::cin.good())
+    {
+        std::cerr<<"Eingabefehler";
+        return EXIT_FAILURE;
+    }
+
 
     // complex number with radius and argument
     double r, phi;
@@ -53,7 +69,10 @@ int main(int argc, char* argv[])
     for (unsigned i = 0; i < num_iterations; ++i)
     {
         current_value = next_elem(current_value);
-        outfile<<current_value.real()<<" "<<current_value.real()<<'\n';
+
+        // write only if the number is finite
+        if(is_finite(current_value))
+            outfile<<current_value.real()<<"  "<<current_value.imag()<<'\n';
     }
 
     outfile.close();
