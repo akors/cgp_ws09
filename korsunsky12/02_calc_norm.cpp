@@ -2,6 +2,9 @@
 #include <complex>
 #include <valarray>
 
+#include <ctime>
+#include <cstdlib>
+
 double norm(const std::valarray<double>& vec)
 {
     std::valarray<double> tempvec(vec);
@@ -24,21 +27,50 @@ double norm(const std::valarray<std::complex<double> >& vec)
     return sum.real();
 }
 
+inline double rand_dbl()
+{
+    // produce random numbers in this range
+    static const double min = -200., max = 200.;
+
+    return 
+        (max - min)*
+        (static_cast<double>(rand()) /  static_cast<double>(RAND_MAX))
+        + min;
+}
+
+template <typename T>
+void show_vec(const std::valarray<T>& v)
+{
+    if (v.size() != 0)
+        std::cout<<v[0];
+
+    for (unsigned i = 1; i < v.size(); ++i)
+        std::cout<<", "<<v[i];
+}
+
+inline std::complex<double> rand_cmpl()
+{
+    return std::complex<double>(rand_dbl(),rand_dbl());
+}
+
 int main()
 {
-    const double realnums[] = { 2., 4., 11., 29. };
+    srand(time(NULL));
+
+    // create random double vector
+    double realnums[4];
+    std::generate_n(realnums, 4, &rand_dbl);
     std::valarray<double> real_vec(realnums, 4);
 
     std::complex<double> im_nums[4];
-    im_nums[0] = std::complex<double>(1., 0);
-    im_nums[1] = std::complex<double>(2., -11);
-    im_nums[2] = std::complex<double>(3., 2);
-    im_nums[3] = std::complex<double>(4., 1);
-
+    std::generate_n(im_nums, 4, &rand_cmpl);
     std::valarray<std::complex<double> > imag_vec(im_nums, 4);
 
-    std::cout<<norm(real_vec)<<'\n';
-    std::cout<<norm(imag_vec)<<'\n';
+    std::cout<<"Reeler Vektor: "; show_vec(real_vec); std::cout<<'\n';
+    std::cout<<"Norm: "<<norm(real_vec)<<'\n'<<'\n';
+
+    std::cout<<"Imaginaerer Vektor: "; show_vec(imag_vec); std::cout<<'\n';
+    std::cout<<"Norm: "<<norm(imag_vec)<<'\n';
 
     return 0;
 }
