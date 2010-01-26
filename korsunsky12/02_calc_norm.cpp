@@ -5,26 +5,31 @@
 #include <ctime>
 #include <cstdlib>
 
+
+template <typename T>
+void show_vec(const std::valarray<T>& v)
+{
+    if (v.size() != 0)
+        std::cout<<v[0];
+
+    for (unsigned i = 1; i < v.size(); ++i)
+        std::cout<<", "<<v[i];
+}
+
+
 double norm(const std::valarray<double>& vec)
 {
     std::valarray<double> tempvec(vec);
     tempvec *= vec;
-    return tempvec.sum();
+    return sqrt(tempvec.sum());
 }
 
 double norm(const std::valarray<std::complex<double> >& vec)
 {
-    // create temporary vector, complex-conjugate
-    std::valarray<std::complex<double> > tempvec(vec);
-    tempvec.apply(std::conj);
+    // multiply complex conjugate vector with vector
+    std::valarray<std::complex<double> > tempvec = vec.apply(std::conj) * vec;
 
-    // multiply conjugate vector with previous vector
-    tempvec *= vec;
-
-    // retrieve sum. The sum should now hold only real values
-    std::complex<double> sum = tempvec.sum();
-
-    return sum.real();
+    return sqrt(tempvec.sum().real());
 }
 
 inline double rand_dbl()
@@ -36,16 +41,6 @@ inline double rand_dbl()
         (max - min)*
         (static_cast<double>(rand()) /  static_cast<double>(RAND_MAX))
         + min;
-}
-
-template <typename T>
-void show_vec(const std::valarray<T>& v)
-{
-    if (v.size() != 0)
-        std::cout<<v[0];
-
-    for (unsigned i = 1; i < v.size(); ++i)
-        std::cout<<", "<<v[i];
 }
 
 inline std::complex<double> rand_cmpl()
@@ -64,6 +59,7 @@ int main()
 
     std::complex<double> im_nums[4];
     std::generate_n(im_nums, 4, &rand_cmpl);
+
     std::valarray<std::complex<double> > imag_vec(im_nums, 4);
 
     std::cout<<"Reeler Vektor: "; show_vec(real_vec); std::cout<<'\n';
