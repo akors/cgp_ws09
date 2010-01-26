@@ -6,12 +6,16 @@
 
 #include <cstdlib>
 
-const unsigned default_num_iterations = 30;
+
+const double _inf = std::numeric_limits<double>::infinity();
 
 inline bool is_finite(const std::complex<double>& c)
 {
-    return (fabs(c.real()) != std::numeric_limits<double>::infinity() &&
-        fabs(c.imag()) != std::numeric_limits<double>::infinity());
+    return 
+        (c.real() == c.real()) && (c.imag() == c.imag()) &&
+        (fabs(c.real()) != _inf) && (fabs(c.imag() != _inf))
+            ;
+    // a double compared to itself returns false only if it is nan
 }
 
 inline std::complex<double> next_elem(std::complex<double> prev)
@@ -21,7 +25,7 @@ inline std::complex<double> next_elem(std::complex<double> prev)
 
 int main(int argc, char* argv[])
 {
-    unsigned int num_iterations = default_num_iterations;
+    unsigned int num_iterations;
     std::string outfilename;
 
     // if we got a parameter passed in, we use it as the output filename,
