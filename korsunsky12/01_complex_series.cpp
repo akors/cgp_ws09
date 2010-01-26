@@ -8,6 +8,13 @@
 
 
 const double _inf = std::numeric_limits<double>::infinity();
+const double max_displayed = 9e6;
+
+inline bool is_small(const std::complex<double>& c)
+{
+    return 
+        fabs(c.real()) < max_displayed && fabs(c.imag())  < max_displayed;
+}
 
 inline bool is_finite(const std::complex<double>& c)
 {
@@ -69,13 +76,17 @@ int main(int argc, char* argv[])
     std::ofstream outfile(outfilename.c_str());
     std::complex<double> current_value = std::polar(r, phi);
 
+    // write all numbers in fixed format, because xmgrace is too stupid
+    // for exponents
+    outfile.setf(std::ios_base::fixed);
+
     // write the series into the filename
     for (unsigned i = 0; i < num_iterations; ++i)
     {
         current_value = next_elem(current_value);
 
-        // write only if the number is finite
-        if(is_finite(current_value))
+        // write only if the number is finite and rather small
+        if(is_finite(current_value) && is_small(current_value) )
             outfile<<current_value.real()<<"  "<<current_value.imag()<<'\n';
     }
 
